@@ -34,6 +34,19 @@ class ArtistController extends Controller {
         if(!$artist) {
             return response()->json(['message' => 'Document not found'], 404);
         }
+
+        $songId = [];
+
+        foreach ($artist->songs as $song) {
+            array_push($songId, $song->id);
+        }
+
+        //detach artist from song before delete, this delete the association on table as well.
+        foreach ($songId as $id) {
+            $song = Song::find($id);
+            $song->artists()->detach($artist);
+        }
+
         $artist->delete();
         return response()->json(['message' => 'Artist deleted'], 200);
     }

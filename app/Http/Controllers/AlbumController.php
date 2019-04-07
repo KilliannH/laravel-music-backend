@@ -16,9 +16,9 @@ class AlbumController extends Controller {
     }
 
     public function getAlbums() {
-        $albums = Album::all();
+        $albums = Album::with('songs')->get();
         $response = ['albums' => $albums];
-        return $response()->json($response, 200);
+        return response()->json($response, 200);
     }
 
     public function putAlbum(Request $request, $id) {
@@ -37,6 +37,18 @@ class AlbumController extends Controller {
         if(!$album) {
             return response()->json(['message' => 'Document not found'], 404);
         }
+
+        $songId = [];
+
+        foreach ($album->songs as $song) {
+            array_push($songId, $song->id);
+        }
+
+        foreach ($songId as $id) {
+            $song = Song::find($id);
+            $song->albums()->detach($album);
+        }
+
         $album->delete();
         return response()->json(['message' => 'Album deleted'], 200);
     }
