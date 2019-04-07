@@ -14,8 +14,8 @@ class ArtistController extends Controller {
     }
 
     public function getArtists() {
-        $artist = Artist::all();
-        $response = ['artist' => $artist];
+        $artists = Artist::all();
+        $response = ['artists' => $artists];
         return response()->json($response, 200);
     }
 

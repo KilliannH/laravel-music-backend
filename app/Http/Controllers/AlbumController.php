@@ -11,12 +11,12 @@ class AlbumController extends Controller {
         $album->title = $request->input('title');
         $album->img_url = $request->input('img_url');
         $album->save();
-        return response()->json();
+        return response()->json(['album' => $album], 201);
     }
 
     public function getAlbums() {
-        $album = Album::all();
-        $response = ['album' => $album];
+        $albums = Album::all();
+        $response = ['albums' => $albums];
         return $response()->json($response, 200);
     }
 
