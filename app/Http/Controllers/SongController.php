@@ -28,6 +28,8 @@ class SongController extends Controller {
     }
 
     // ! \\ IMPORTANT
+
+    // url : /songs/{id}/detach/album
     public function detachAlbum($songId, $albumId)
     {
         $song = Song::find($songId);
@@ -38,6 +40,7 @@ class SongController extends Controller {
         return 'Success';
     }
 
+    // url : /songs/{id}/detach/artist
     public function detachArtist($songId, $artistId)
     {
         $song = Song::find($songId);
@@ -54,7 +57,48 @@ class SongController extends Controller {
         return response()->json($response, 200);
     }
 
-    public function putSong(Request $request, $id) {}
+    public function putSong(Request $request, $id) {
+        $song = Song::find($id)->with('artists')->get();
+        if(!$song) {
+            return response()->json(['message' => 'Document not found'], 404);
+        }
 
-    public function deleteSong($id) {}
+        $song->title = $request->input('title');
+        $song->path = $request->input('path');
+
+        $song->save();
+        return response()->json(['song' => $song], 200);
+    }
+
+    public function deleteSong($id) {
+        $song = Song::find($id);
+        if(!$song) {
+            return response()->json(['message' => 'Document not found'], 404);
+        }
+
+        $albumId = [];
+
+        foreach ($song->albums as $album) {
+            array_push($albumId, $album->id);
+        }
+
+        foreach ($albumId as $id) {
+            $album = Album::find($id);
+            $album->songs()->detach($song);
+        }
+
+        $artistId = [];
+
+        foreach ($song->artists as $artist) {
+            array_push($artistId, $artist->id);
+        }
+
+        foreach ($artistId as $id) {
+            $artist = Artist::find($id);
+            $artist->songs()->detach($song);
+        }
+
+        $song->delete();
+        return response()->json(['message' => 'Song deleted'], 200);
+    }
 }
