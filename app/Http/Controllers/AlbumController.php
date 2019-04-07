@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Album;
+use App\Song;
 use Illuminate\Http\Request;
 
 class AlbumController extends Controller {
