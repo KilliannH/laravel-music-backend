@@ -29,26 +29,62 @@ class SongController extends Controller {
 
     // ! \\ IMPORTANT
 
-    // url : /songs/{id}/detach/album
-    public function detachAlbum($songId, $albumId)
+    // detach
+    public function detachAlbums(Request $request, $id)
     {
-        $song = Song::find($songId);
-        $album = Album::find($albumId);
+        $song = Song::find($id);
 
-        $song->albums()->detach($album);
+        $albumId = $request->input('albumId');
 
-        return 'Success';
+        foreach($albumId as $i) {
+            $album = Album::find($i);
+            $song->albums()->detach($album);
+        }
+
+        return 'Successfully detached';
     }
 
-    // url : /songs/{id}/detach/artist
-    public function detachArtist($songId, $artistId)
+    public function detachArtists(Request $request, $id)
     {
-        $song = Song::find($songId);
-        $artist = Artist::find($artistId);
+        $song = Song::find($id);
 
-        $song->artists()->detach($artist);
+        $artistId = $request->input('artistId');
 
-        return 'Success';
+        foreach($artistId as $i) {
+            $artist = Artist::find($i);
+            $song->artists()->detach($artist);
+        }
+
+        return 'Successfully detached';
+    }
+
+    // attach
+    public function attachAlbums(Request $request, $id)
+    {
+        $song = Song::find($id);
+
+        $albumId = $request->input('albumId');
+
+        foreach($albumId as $i) {
+            $album = Album::find($i);
+            $song->albums()->attach($album);
+        }
+
+        return 'Successfully attached';
+    }
+
+    public function attachArtists(Request $request, $id)
+    {
+        $song = Song::find($id);
+
+        $artistId = $request->input('artistId');
+
+        foreach($artistId as $i) {
+            $artist = Artist::find($i);
+            $song->artists()->attach($artist);
+        }
+
+        return 'Successfully attached';
     }
 
     public function getSongs() {

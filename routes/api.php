@@ -31,6 +31,23 @@ Route::delete('/songs/{id}', [
     'uses' => 'SongController@deleteSong'
 ]);
 
+// detach artists, albums
+Route::put('/songs/{id}/detach/artists', [
+    'uses' => 'SongController@detachArtists'
+]);
+
+Route::put('/songs/{id}/detach/albums', [
+    'uses' => 'SongController@detachAlbums'
+]);
+
+//attach
+Route::put('/songs/{id}/attach/artists', [
+    'uses' => 'SongController@attachArtists'
+]);
+
+Route::put('/songs/{id}/attach/albums', [
+    'uses' => 'SongController@attachAlbums'
+]);
 
 // Artist
 
