@@ -63,6 +63,16 @@ Route::put('/artists/{id}', [
     'uses' => 'ArtistController@putArtist'
 ]);
 
+// detach
+Route::put('/artists/{id}/detach/albums', [
+    'uses' => 'ArtistController@detachAlbums'
+]);
+
+// attach
+Route::put('/artists/{id}/attach/albums', [
+    'uses' => 'ArtistController@attachAlbums'
+]);
+
 Route::delete('/artists/{id}', [
     'uses' => 'ArtistController@deleteArtist'
 ]);
@@ -80,6 +90,16 @@ Route::post('/albums', [
 
 Route::put('/albums/{id}', [
     'uses' => 'AlbumController@putAlbum'
+]);
+
+// detach
+Route::put('/albums/{id}/detach/artists', [
+    'uses' => 'AlbumController@detachArtists'
+]);
+
+// attach
+Route::put('/albums/{id}/attach/artists', [
+    'uses' => 'AlbumController@attachArtists'
 ]);
 
 Route::delete('/albums/{id}', [

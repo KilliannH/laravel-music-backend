@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Album;
+use App\Artist;
 use App\Song;
 use Illuminate\Http\Request;
 
@@ -12,13 +13,49 @@ class AlbumController extends Controller {
         $album->title = $request->input('title');
         $album->img_url = $request->input('img_url');
         $album->save();
+
+        $artistId = $request->input('artistId');
+
+        foreach ($artistId as $i) {
+            $artist = Artist::find($i);
+            $album->artists()->attach($artist);
+        }
+
         return response()->json(['album' => $album], 201);
     }
 
     public function getAlbums() {
-        $albums = Album::with('songs')->get();
+        $albums = Album::with('songs')->with('artists')->get();
         $response = ['albums' => $albums];
         return response()->json($response, 200);
+    }
+
+    public function attachArtists(Request $request, $id)
+    {
+        $album = Album::find($id);
+
+        $artistId = $request->input('artistId');
+
+        foreach($artistId as $i) {
+            $artist = Artist::find($i);
+            $album->artists()->attach($artist);
+        }
+
+        return 'Successfully attached';
+    }
+
+    public function detachArtists(Request $request, $id)
+    {
+        $album = Album::find($id);
+
+        $artistId = $request->input('artistId');
+
+        foreach($artistId as $i) {
+            $artist = Artist::find($i);
+            $album->artists()->detach($artist);
+        }
+
+        return 'Successfully detached';
     }
 
     public function putAlbum(Request $request, $id) {
@@ -47,6 +84,17 @@ class AlbumController extends Controller {
         foreach ($songId as $id) {
             $song = Song::find($id);
             $song->albums()->detach($album);
+        }
+
+        $artistId = [];
+
+        foreach ($album->artists as $artist) {
+            array_push($artistId, $artist->id);
+        }
+
+        foreach ($artistId as $id) {
+            $artist = Artist::find($id);
+            $artist->albums()->detach($album);
         }
 
         $album->delete();

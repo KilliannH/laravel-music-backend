@@ -16,13 +16,17 @@ class SongController extends Controller {
 
         $albumId = $request->input('albumId');
 
-        $album = Album::find($albumId);
-        $song->albums()->attach($album);
+        foreach($albumId as $i) {
+            $album = Album::find($i);
+            $song->albums()->attach($album);
+        }
 
         $artistId = $request->input('artistId');
 
-        $artist = Artist::find($artistId);
-        $song->artists()->attach($artist);
+        foreach($artistId as $i) {
+            $artist = Artist::find($i);
+            $song->artists()->attach($artist);
+        }
 
         return response()->json(['song' => $song], 201);
     }

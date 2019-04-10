@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Song;
+use App\Album;
 use App\Artist;
 use Illuminate\Http\Request;
 
@@ -14,9 +16,37 @@ class ArtistController extends Controller {
     }
 
     public function getArtists() {
-        $artists = Artist::with('songs')->get();
+        $artists = Artist::with('songs')->with('albums')->get();
         $response = ['artists' => $artists];
         return response()->json($response, 200);
+    }
+
+    public function attachAlbums(Request $request, $id)
+    {
+        $artist = Artist::find($id);
+
+        $albumId = $request->input('albumId');
+
+        foreach($albumId as $i) {
+            $album = Album::find($i);
+            $artist->albums()->attach($album);
+        }
+
+        return 'Successfully attached';
+    }
+
+    public function detachAlbums(Request $request, $id)
+    {
+        $artist = Artist::find($id);
+
+        $albumId = $request->input('albumId');
+
+        foreach($albumId as $i) {
+            $album = Album::find($i);
+            $artist->albums()->detach($album);
+        }
+
+        return 'Successfully detached';
     }
 
     public function putArtist(Request $request, $id) {
@@ -45,6 +75,17 @@ class ArtistController extends Controller {
         foreach ($songId as $id) {
             $song = Song::find($id);
             $song->artists()->detach($artist);
+        }
+
+        $albumId = [];
+
+        foreach ($artist->albums as $album) {
+            array_push($albumId, $album->id);
+        }
+
+        foreach ($albumId as $id) {
+            $album = Album::find($id);
+            $album->artists()->detach($artist);
         }
 
         $artist->delete();

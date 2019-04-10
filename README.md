@@ -9,7 +9,7 @@
 {"name"}
 
 /albums
-{"title", "img_url"}
+{"title", "img_url", "artistId"[]}
 
 [PUT]
 
@@ -33,8 +33,24 @@
 /artists/{id}
 {"name"}
 
+    [DETACH]
+    /artists/{id}/detach/albums
+    {"albumId"[]}
+    
+    [ATACH]
+     /artists/{id}/atach/albums
+     {"albumId"[]}
+
 /albums
 {"title", "img_url"}
+
+    [DETACH]
+    /albums/{id}/detach/artists
+    {"artistId"[]}
+    
+    [ATACH]
+     /albums/{id}/atach/artists
+     {"artistId"[]}
 
 [DELETE]
 
@@ -57,6 +73,11 @@
 /albums
 /albums/{id}
 
+
+Scenario : User creates an artist,
+then creates an album wth artistId attached,
+then creates a song with artistId & albumId attached.
+
 ----------------------
 
-TODO - getById, Attach, Detach.
+TODO - getById
