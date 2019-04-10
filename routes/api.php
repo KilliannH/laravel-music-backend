@@ -14,116 +14,113 @@ use Illuminate\Http\Request;
 */
 
 // Song
+Route::group(['middleware' => ['jwt.verify']], function() {
 
-Route::get('/songs', [
-    'uses' => 'SongController@getSongs'
-]);
+    Route::get('/songs', [
+        'uses' => 'SongController@getSongs'
+    ]);
 
-Route::get('/songs/{id}', [
-    'uses' => 'SongController@getSong'
-]);
+    Route::get('/songs/{id}', [
+        'uses' => 'SongController@getSong'
+    ]);
 
-Route::post('/songs', [
-    'uses' => 'SongController@postSong'
-]);
+    Route::post('/songs', [
+        'uses' => 'SongController@postSong'
+    ]);
 
-Route::put('/songs/{id}', [
-    'uses' => 'SongController@putSong'
-]);
+    Route::put('/songs/{id}', [
+        'uses' => 'SongController@putSong'
+    ]);
 
-Route::delete('/songs/{id}', [
-    'uses' => 'SongController@deleteSong'
-]);
+    Route::delete('/songs/{id}', [
+        'uses' => 'SongController@deleteSong'
+    ]);
 
-// detach artists, albums
-Route::put('/songs/{id}/detach/artists', [
-    'uses' => 'SongController@detachArtists'
-]);
+    // detach artists, albums
+    Route::put('/songs/{id}/detach/artists', [
+        'uses' => 'SongController@detachArtists'
+    ]);
 
-Route::put('/songs/{id}/detach/albums', [
-    'uses' => 'SongController@detachAlbums'
-]);
+    Route::put('/songs/{id}/detach/albums', [
+        'uses' => 'SongController@detachAlbums'
+    ]);
 
-//attach
-Route::put('/songs/{id}/attach/artists', [
-    'uses' => 'SongController@attachArtists'
-]);
+    //attach
+    Route::put('/songs/{id}/attach/artists', [
+        'uses' => 'SongController@attachArtists'
+    ]);
 
-Route::put('/songs/{id}/attach/albums', [
-    'uses' => 'SongController@attachAlbums'
-]);
+    Route::put('/songs/{id}/attach/albums', [
+        'uses' => 'SongController@attachAlbums'
+    ]);
 
-// Artist
+    // Artist
 
-Route::get('/artists', [
-    'uses' => 'ArtistController@getArtists'
-]);
+    Route::get('/artists', [
+        'uses' => 'ArtistController@getArtists'
+    ]);
 
-Route::get('/artists/{id}', [
-    'uses' => 'ArtistController@getArtist'
-]);
+    Route::get('/artists/{id}', [
+        'uses' => 'ArtistController@getArtist'
+    ]);
 
-Route::post('/artists', [
-    'uses' => 'ArtistController@postArtist'
-]);
+    Route::post('/artists', [
+        'uses' => 'ArtistController@postArtist'
+    ]);
 
-Route::put('/artists/{id}', [
-    'uses' => 'ArtistController@putArtist'
-]);
+    Route::put('/artists/{id}', [
+        'uses' => 'ArtistController@putArtist'
+    ]);
 
-// detach
-Route::put('/artists/{id}/detach/albums', [
-    'uses' => 'ArtistController@detachAlbums'
-]);
+    // detach
+    Route::put('/artists/{id}/detach/albums', [
+        'uses' => 'ArtistController@detachAlbums'
+    ]);
 
-// attach
-Route::put('/artists/{id}/attach/albums', [
-    'uses' => 'ArtistController@attachAlbums'
-]);
+    // attach
+    Route::put('/artists/{id}/attach/albums', [
+        'uses' => 'ArtistController@attachAlbums'
+    ]);
 
-Route::delete('/artists/{id}', [
-    'uses' => 'ArtistController@deleteArtist'
-]);
+    Route::delete('/artists/{id}', [
+        'uses' => 'ArtistController@deleteArtist'
+    ]);
 
 
-// Album
+    // Album
 
-Route::get('/albums', [
-    'uses' => 'AlbumController@getAlbums'
-]);
+    Route::get('/albums', [
+        'uses' => 'AlbumController@getAlbums'
+    ]);
 
-Route::get('/albums/{id}', [
-    'uses' => 'AlbumController@getAlbum'
-]);
+    Route::get('/albums/{id}', [
+        'uses' => 'AlbumController@getAlbum'
+    ]);
 
-Route::post('/albums', [
-    'uses' => 'AlbumController@postAlbum'
-]);
+    Route::post('/albums', [
+        'uses' => 'AlbumController@postAlbum'
+    ]);
 
-Route::put('/albums/{id}', [
-    'uses' => 'AlbumController@putAlbum'
-]);
+    Route::put('/albums/{id}', [
+        'uses' => 'AlbumController@putAlbum'
+    ]);
 
-// detach
-Route::put('/albums/{id}/detach/artists', [
-    'uses' => 'AlbumController@detachArtists'
-]);
+    // detach
+    Route::put('/albums/{id}/detach/artists', [
+        'uses' => 'AlbumController@detachArtists'
+    ]);
 
-// attach
-Route::put('/albums/{id}/attach/artists', [
-    'uses' => 'AlbumController@attachArtists'
-]);
+    // attach
+    Route::put('/albums/{id}/attach/artists', [
+        'uses' => 'AlbumController@attachArtists'
+    ]);
 
-Route::delete('/albums/{id}', [
-    'uses' => 'AlbumController@deleteAlbum'
-]);
+    Route::delete('/albums/{id}', [
+        'uses' => 'AlbumController@deleteAlbum'
+    ]);
+});
 
 // AUTH
 
-Route::post('/users', [
-    'uses' => 'UserController@signup'
-]);
-
-Route::post('/users/signin', [
-    'uses' => 'UserController@signin'
-]);
+Route::post('register', 'UserController@register');
+Route::post('login', 'UserController@authenticate');
