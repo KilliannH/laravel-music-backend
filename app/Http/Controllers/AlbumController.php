@@ -30,6 +30,12 @@ class AlbumController extends Controller {
         return response()->json($response, 200);
     }
 
+    public function getAlbum($id) {
+        $album = Album::find($id)->with('songs')->with('artists')->get();
+        $response = ['album' => $album];
+        return response()->json($response, 200);
+    }
+
     public function attachArtists(Request $request, $id)
     {
         $album = Album::find($id);

@@ -97,6 +97,12 @@ class SongController extends Controller {
         return response()->json($response, 200);
     }
 
+    public function getSong($id) {
+        $song = Song::find($id)->with('albums')->with('artists')->get();
+        $response = ['song' => $song];
+        return response()->json($response, 200);
+    }
+
     public function putSong(Request $request, $id) {
         $song = Song::find($id)->with('artists')->get();
         if(!$song) {

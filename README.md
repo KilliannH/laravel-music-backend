@@ -80,4 +80,4 @@ then creates a song with artistId & albumId attached.
 
 ----------------------
 
-TODO - getById
+TODO - use app and make tests.

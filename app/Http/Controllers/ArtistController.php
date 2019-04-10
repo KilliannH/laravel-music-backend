@@ -21,6 +21,12 @@ class ArtistController extends Controller {
         return response()->json($response, 200);
     }
 
+    public function getArtist($id) {
+        $artist = Artist::find($id)->with('songs')->with('albums')->get();
+        $response = ['artist' => $artist];
+        return response()->json($response, 200);
+    }
+
     public function attachAlbums(Request $request, $id)
     {
         $artist = Artist::find($id);

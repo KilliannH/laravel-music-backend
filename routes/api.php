@@ -19,6 +19,10 @@ Route::get('/songs', [
     'uses' => 'SongController@getSongs'
 ]);
 
+Route::get('/songs/{id}', [
+    'uses' => 'SongController@getSong'
+]);
+
 Route::post('/songs', [
     'uses' => 'SongController@postSong'
 ]);
@@ -55,6 +59,10 @@ Route::get('/artists', [
     'uses' => 'ArtistController@getArtists'
 ]);
 
+Route::get('/artists/{id}', [
+    'uses' => 'ArtistController@getArtist'
+]);
+
 Route::post('/artists', [
     'uses' => 'ArtistController@postArtist'
 ]);
@@ -82,6 +90,10 @@ Route::delete('/artists/{id}', [
 
 Route::get('/albums', [
     'uses' => 'AlbumController@getAlbums'
+]);
+
+Route::get('/albums/{id}', [
+    'uses' => 'AlbumController@getAlbum'
 ]);
 
 Route::post('/albums', [
