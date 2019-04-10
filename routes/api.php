@@ -117,3 +117,13 @@ Route::put('/albums/{id}/attach/artists', [
 Route::delete('/albums/{id}', [
     'uses' => 'AlbumController@deleteAlbum'
 ]);
+
+// AUTH
+
+Route::post('/users', [
+    'uses' => 'UserController@signup'
+]);
+
+Route::post('/users/signin', [
+    'uses' => 'UserController@signin'
+]);
