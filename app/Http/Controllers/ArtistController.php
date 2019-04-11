@@ -11,6 +11,7 @@ class ArtistController extends Controller {
     public function postArtist(Request $request) {
         $artist = new Artist();
         $artist->name = $request->input('name');
+        $artist->img_url = $request->input('img_url');
         $artist->save();
         return response()->json(['artist' => $artist], 201);
     }
@@ -61,6 +62,7 @@ class ArtistController extends Controller {
             return response()->json(['message' => 'Document not found'], 404);
         }
         $artist->name = $request->input('name');
+        $artist->img_url = $request->input('img_url');
         $artist->save();
         return response()->json(['artist' => $artist], 200);
     }
