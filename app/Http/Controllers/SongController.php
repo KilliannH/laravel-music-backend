@@ -98,13 +98,13 @@ class SongController extends Controller {
     }
 
     public function getSong($id) {
-        $song = Song::find($id)->with('albums')->with('artists')->get();
+        $song = Song::with('albums')->with('artists')->find($id);
         $response = ['song' => $song];
         return response()->json($response, 200);
     }
 
     public function putSong(Request $request, $id) {
-        $song = Song::find($id)->with('artists')->get();
+        $song = Song::find($id);
         if(!$song) {
             return response()->json(['message' => 'Document not found'], 404);
         }

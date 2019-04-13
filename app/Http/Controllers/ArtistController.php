@@ -23,7 +23,7 @@ class ArtistController extends Controller {
     }
 
     public function getArtist($id) {
-        $artist = Artist::find($id)->with('songs')->with('albums')->get();
+        $artist = Artist::with('songs')->with('albums')->find($id);
         $response = ['artist' => $artist];
         return response()->json($response, 200);
     }

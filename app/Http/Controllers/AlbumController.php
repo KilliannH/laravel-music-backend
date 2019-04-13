@@ -31,7 +31,7 @@ class AlbumController extends Controller {
     }
 
     public function getAlbum($id) {
-        $album = Album::find($id)->with('songs')->with('artists')->get();
+        $album = Album::with('songs')->with('artists')->find($id);
         $response = ['album' => $album];
         return response()->json($response, 200);
     }
