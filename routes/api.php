@@ -118,6 +118,12 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::delete('/albums/{id}', [
         'uses' => 'AlbumController@deleteAlbum'
     ]);
+
+    // upload
+
+    Route::post('/upload', [
+        'uses' => 'FileController@uploadFile'
+    ]);
 });
 
 // AUTH
